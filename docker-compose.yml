@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+
+    networks:
+      - web
+    
+    environment:
+      MONGODB_USER: root
+      MONGODB_PASSWORD: rootpassword
+
+  postgredb:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+
+    networks:
+      - web
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+    networks:
+      - web
+    
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3002:3000"
+    
+    networks:
+      - web
+
+    depends_on:
+      - mongo
+      - postgredb
+      - redis
+
+    environment:
+      MONGODB_USER: root
+      MONGODB_PASSWORD: rootpassword
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis
+
+    command: poetry run python3 -m flask --app app.py --debug run --host=0.0.0.0
+
+networks:
+  web:
+    driver: bridge
