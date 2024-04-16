@@ -4,48 +4,35 @@ services:
   app:
     build: .
     restart: always
+    environment:
+      POSTGRES_DB_USER: postgres
+      POSTGRES_DB_PASSWORD: postgres
+      POSTGRES_DB_NAME: encuesta
+      POSTGRES_DB_HOST: postgredb
+      POSTGRES_DB_PORT: 5432
+
+      # MONGODB_USER: root
+      # MONGODB_PASSWORD: rootpassword
+
+      # REDIS_HOST: redis
+      # REDIS_PORT: 6379
+      # REDIS_PASSWORD: redis
     ports:
-      - 5002:5000
+      - 5000:5000
     
     networks:
       - web
 
     depends_on:
-      # - mongo
       - postgredb
+      # - mongo
       # - redis
 
-    environment:
-      # MONGODB_USER: root
-      # MONGODB_PASSWORD: rootpassword
-
-      POSTGRES_DB_USER: postgres
-      POSTGRES_DB_PASSWORD: postgres
-      POSTGRES_DB_NAME: postgres
-      POSTGRES_DB_HOST: postgredb
-      POSTGRES_DB_PORT: 5432
-
-      # REDIS_HOST: redis
-      # REDIS_PORT: 6379
-      # REDIS_PASSWORD: redis
 
     volumes:
       - .:/opt/app
 
     command: poetry run python3 -m flask --app app.py --debug run --host=0.0.0.0
-
-  # mongo:
-  #   image: mongo
-  #   restart: always
-  #   ports:
-  #     - "27017:27017"
-
-  #   networks:
-  #     - web
-    
-  #   environment:
-  #     MONGODB_USER: root
-  #     MONGODB_PASSWORD: rootpassword
 
   postgredb:
     image: postgres
@@ -60,6 +47,19 @@ services:
     
     volumes:
       - ./database/postgre/:/docker-entrypoint-initdb.d/
+  
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+
+  #   networks:
+  #     - web
+    
+  #   environment:
+  #     MONGODB_USER: root
+  #     MONGODB_PASSWORD: rootpassword
 
   # redis:
   #   image: redis

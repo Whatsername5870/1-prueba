@@ -39,7 +39,7 @@ def logout():
 def getUsers():
     None
 
-@app.route('users/<int:id>')
+@app.route('/users/<int:id>')
 def getUser():
     None
 
