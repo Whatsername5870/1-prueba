@@ -1,8 +1,12 @@
 import os
 
 from flask import Flask, request, make_response
+
 from db_postgre import PostgreDatabase
 from db_postgre_service import PostgreDatabaseService
+
+from db_mongo import MongoDB
+from db_mongo_service import MongoDatabaseService
 
 POSTGRES_DB_HOST = os.getenv('POSTGRES_DB_HOST')
 POSTGRES_DB_NAME = os.getenv('POSTGRES_DB_NAME')
@@ -10,12 +14,20 @@ POSTGRES_DB_USER = os.getenv('POSTGRES_DB_USER')
 POSTGRES_DB_PASSWORD = os.getenv('POSTGRES_DB_PASSWORD')
 POSTGRES_DB_PORT = os.getenv('POSTGRES_DB_PORT')
 
+MONGO_DB_HOST = os.getenv('MONGO_DB_HOST')
+MONGO_DB_PORT = int(os.getenv('MONGO_DB_PORT'))
+MONGO_DB_USER = os.getenv('MONGO_DB_USER')
+MONGO_DB_PASSWORD = os.getenv('MONGO_DB_PASSWORD')
+
 postgre_db = PostgreDatabase(database=POSTGRES_DB_NAME, host=POSTGRES_DB_HOST,
                                 user=POSTGRES_DB_USER, password=POSTGRES_DB_PASSWORD,
                                 port=POSTGRES_DB_PORT)
 
+mongo_db = MongoDB(host=MONGO_DB_HOST, port=MONGO_DB_PORT, usernamen=MONGO_DB_USER, password=MONGO_DB_PASSWORD)
+
 app = Flask(__name__)
 postgre_db_service = PostgreDatabaseService(database=postgre_db)
+mongo_db_service = MongoDatabaseService(database=mongo_db)
 
 @app.route('/')
 def home():

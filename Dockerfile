@@ -1,7 +1,7 @@
 FROM python:3.11
 
-ENV MONGODB_USER='root'
-ENV MONGODB_PASSWORD='rootpassword'
+ENV MONGO_DB_USER='root'
+ENV MONGO_DB_PASSWORD='example'
 
 ENV POSTGRES_DB_USER='postgres'
 ENV POSTGRES_DB_PASSWORD='postgres'
