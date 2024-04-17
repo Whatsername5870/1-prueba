@@ -22,4 +22,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ghcr.io/your-username/your-repository:latest
+          tags: ghcr.io/Whatsername5870/1-prueba:latest
