@@ -33,6 +33,19 @@ mongo_db_service = MongoDatabaseService(database=mongo_db)
 def home():
     return 'Hello, World!'
 
+# ENDPOINT MUESTRA DE CONSULTA A BASE DE DATOS POSTGRESQL
+@app.route('/prueba')
+def prueba():
+    data = postgre_db_service.query_prueba()
+    return data
+
+# ENDPOINT MUESTRA DE INSERCIÓN A BASE DE DATOS POSTGRESQL
+@app.route('/insertar_user', methods=['POST'])
+def insertar_user():
+    user = request.json
+    data = postgre_db_service.insertar_user(user)
+    return data
+
 #Endpoints para autenticación
 @app.route('/auth/register', methods = ['POST'])
 def register():
