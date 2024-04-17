@@ -127,7 +127,7 @@ def postResponse():
 def getResponses():
     None
 
-#Endpoints para los encuestados [Decidir - Preguntar algo al profe]
+#Endpoints para los encuestados [Decidir - Preguntar algo al profe] si
 @app.route('/respondents', methods = ['POST'])
 def postRespondent():
     None
